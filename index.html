@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizarra Digital Interactiva - La Entrevista y sus Partes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        window.tailwind = window.tailwind || {};
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        montanoAzul: '#1269A8',
+                        montanoAmarillo: '#F7D615',
+                        montanoVerdeGris: '#54887D',
+                        montanoAzulClaro: '#88B5C7',
+                        montanoVerdeOliva: '#A6B046',
+                        montanoFondo: '#F2F5E9'
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .pizarra-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(18, 105, 168, 0.08);
+            border: 2px solid #88B5C7;
+        }
+        .tab-btn.active {
+            background-color: #1269A8;
+            color: #ffffff;
+            border-color: #1269A8;
+            font-weight: bold;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-montanoFondo text-gray-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- ENCABEZADO Y BARRA SUPERIOR -->
+    <header class="bg-montanoAzul text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo e Identidad -->
+            <div class="flex items-center gap-3">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyEop0yf6lZ7Jk9MILZxF1rBj4Oqs5esyhIQ&s" 
+                     alt="Colegio Montano Logo" 
+                     class="h-12 w-12 object-contain bg-white rounded-full p-1 border-2 border-montanoAmarillo"
+                     onerror="this.src='https://placehold.co/100x100/1269A8/FFFFFF?text=Montano'">
+                <div>
+                    <h1 class="text-xl font-bold text-montanoAmarillo leading-tight">COLEGIO MONTANO</h1>
+                    <p class="text-xs text-montanoAzulClaro font-medium">Pizarra Digital Interactiva - Plan Diario</p>
+                </div>
+            </div>
+
+            <!-- Ficha Técnica Rápida -->
+            <div class="text-xs sm:text-sm bg-white/10 px-4 py-2 rounded-lg border border-white/20 flex flex-wrap gap-x-4 gap-y-1">
+                <span><strong class="text-montanoAmarillo">Curso:</strong> Comunicación y Lenguaje</span>
+                <span><strong class="text-montanoAmarillo">Grado:</strong> 4to Primaria</span>
+                <span><strong class="text-montanoAmarillo">Unidad:</strong> Unidad 1</span>
+                <span><strong class="text-montanoAmarillo">Docente:</strong> Andrea Aguilar</span>
+                <span><strong class="text-montanoAmarillo">Tiempo:</strong> 50 min</span>
+                <span><strong class="text-montanoAmarillo">Fecha:</strong> Enero 2027</span>
+            </div>
+
+            <!-- Botón Pantalla Completa -->
+            <button onclick="toggleFullScreen()" 
+                    class="bg-montanoAmarillo hover:bg-yellow-400 text-montanoAzul font-bold px-3 py-2 rounded-lg shadow flex items-center gap-2 text-sm transition-all duration-200 active:scale-95">
+                <i class="fa-solid font-bold fa-expand"></i>
+                <span class="hidden md:inline">Pantalla Completa</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- METADATOS PEDAGÓGICOS Y HÁBITOS MONTANO -->
+    <section class="max-w-7xl mx-auto px-4 my-4 w-full">
+        <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-montanoVerdeGris">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                <!-- Competencia & Logro -->
+                <div class="space-y-1">
+                    <span class="font-bold text-montanoAzul flex items-center gap-1">
+                        <i class="fa-solid fa-bullseye text-montanoVerdeGris"></i> Competencia CNB & Logro
+                    </span>
+                    <p class="text-gray-600">
+                        <strong>CNB:</strong> Redacta e interactúa oralmente en situaciones comunicativas usando lenguaje formal, estructurando preguntas claras y coherentes.
+                    </p>
+                    <p class="text-gray-600">
+                        <strong>Logro:</strong> Identifica la estructura de una entrevista (Título, Introducción, Cuerpo y Cierre) y formula preguntas abiertas pertinentes.
+                    </p>
+                </div>
+
+                <!-- Competencias Clave -->
+                <div class="space-y-1">
+                    <span class="font-bold text-montanoAzul flex items-center gap-1">
+                        <i class="fa-solid fa-brain text-montanoVerdeGris"></i> Competencias Clave
+                    </span>
+                    <div class="flex flex-wrap gap-1 pt-1">
+                        <span class="bg-montanoAzulClaro/20 text-montanoAzul font-semibold px-2 py-0.5 rounded text-xs">Expresión Oral</span>
+                        <span class="bg-montanoAzulClaro/20 text-montanoAzul font-semibold px-2 py-0.5 rounded text-xs">Escucha Activa</span>
+                        <span class="bg-montanoAzulClaro/20 text-montanoAzul font-semibold px-2 py-0.5 rounded text-xs">Estructuración Redaccional</span>
+                    </div>
+                </div>
+
+                <!-- Hábitos Montano -->
+                <div class="space-y-1">
+                    <span class="font-bold text-montanoAzul flex items-center gap-1">
+                        <i class="fa-solid fa-star text-montanoAmarillo"></i> Hábitos Montano Integrados
+                    </span>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="text-montanoVerdeOliva">Hábito 2:</strong> Comenzar con un fin en mente (Planificar la guía de preguntas con un propósito claro).</li>
+                        <li><strong class="text-montanoVerdeOliva">Hábito 5:</strong> Buscar primero entender, luego ser entendido (Escuchar con empatía las respuestas del entrevistado).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAVEGACIÓN DE PESTAÑAS (SECUENCIA DIDÁCTICA DE 50 MIN) -->
+    <main class="max-w-7xl mx-auto px-4 mb-6 flex-grow w-full">
+        <!-- Tabs Nav -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+            <button onclick="openTab('tab1')" id="btn-tab1" 
+                    class="tab-btn active bg-white border-2 border-montanoAzulClaro text-montanoAzul p-3 rounded-lg flex items-center justify-center gap-2 transition-all">
+                <i class="fa-solid fa-microphone"></i>
+                <div class="text-left">
+                    <div class="text-xs font-normal">Inicio (~5 min)</div>
+                    <div class="font-bold text-sm">I. Motivación</div>
+                </div>
+            </button>
+            <button onclick="openTab('tab2')" id="btn-tab2" 
+                    class="tab-btn bg-white border-2 border-montanoAzulClaro text-montanoAzul p-3 rounded-lg flex items-center justify-center gap-2 transition-all">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <div class="text-left">
+                    <div class="text-xs font-normal">Individual (20 min)</div>
+                    <div class="font-bold text-sm">II. El Guion Lector</div>
+                </div>
+            </button>
+            <button onclick="openTab('tab3')" id="btn-tab3" 
+                    class="tab-btn bg-white border-2 border-montanoAzulClaro text-montanoAzul p-3 rounded-lg flex items-center justify-center gap-2 transition-all">
+                <i class="fa-solid fa-users-viewfinder"></i>
+                <div class="text-left">
+                    <div class="text-xs font-normal">Equipo (15 min)</div>
+                    <div class="font-bold text-sm">III. Reporteros Montano</div>
+                </div>
+            </button>
+            <button onclick="openTab('tab4')" id="btn-tab4" 
+                    class="tab-btn bg-white border-2 border-montanoAzulClaro text-montanoAzul p-3 rounded-lg flex items-center justify-center gap-2 transition-all">
+                <i class="fa-solid fa-award"></i>
+                <div class="text-left">
+                    <div class="text-xs font-normal">Cierre (10 min)</div>
+                    <div class="font-bold text-sm">IV. Trivia & Rúbrica</div>
+                </div>
+            </button>
+        </div>
+
+        <!-- CONTENIDO DE LAS PESTAÑAS -->
+
+        <!-- PESTAÑA I: INTRODUCCIÓN MOTIVANTE -->
+        <div id="tab1" class="tab-content pizarra-card p-6">
+            <div class="flex items-center gap-3 mb-4 border-b border-gray-200 pb-3">
+                <div class="bg-montanoAmarillo p-3 rounded-full text-montanoAzul font-bold">
+                    <i class="fa-solid fa-circle-play text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-montanoAzul">Pestaña I: Motivación - El Arte de Entrevistar (~5 min)</h2>
+                    <p class="text-xs text-gray-500">Evaluación Diagnóstica / Activación de Saberes Previos</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Recreo Cerebral: "Simulación Flash" -->
+                <div class="bg-montanoFondo p-4 rounded-lg border border-montanoAzulClaro">
+                    <h3 class="font-bold text-montanoAzul mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-montanoVerdeGris"></i> Recreo Cerebral: "Periodista en Acción"
+                    </h3>
+                    <p class="text-sm text-gray-700 mb-3">
+                        Imagina que tienes la oportunidad de hacerle **solo 1 pregunta** a la persona proyectada en pantalla:
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-blue-100 border-l-4 border-blue-500 p-2 text-blue-900 font-bold flex justify-between items-center">
+                            <span>1. Un Astronauta llegando de Marte</span>
+                            <i class="fa-solid fa-user-astronaut text-lg"></i>
+                        </div>
+                        <div class="bg-emerald-100 border-l-4 border-emerald-500 p-2 text-emerald-900 font-bold flex justify-between items-center">
+                            <span>2. Tu Futbolista o Atleta Favorito</span>
+                            <i class="fa-solid fa-person-running text-lg"></i>
+                        </div>
+                        <div class="bg-purple-100 border-l-4 border-purple-500 p-2 text-purple-900 font-bold flex justify-between items-center">
+                            <span>3. El Director del Colegio Montano</span>
+                            <i class="fa-solid fa-user-tie text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 bg-white p-3 rounded border text-xs text-montanoVerdeGris font-semibold">
+                        <i class="fa-solid fa-circle-question"></i> Pregunta Clave: "¿Es lo mismo conversar casualmente que hacer una entrevista organizada?"
+                    </div>
+                </div>
+
+                <!-- Conexión Teórica Breve -->
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-montanoAzul mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark text-montanoVerdeOliva"></i> ¿Qué es una Entrevista y cuáles son sus partes?
+                    </h3>
+                    <p class="text-xs text-gray-600 mb-3">
+                        Una entrevista es un diálogo planificado entre el **Entrevistador** (quien pregunta) y el **Entrevistado** (quien responde) para obtener información sobre un tema o personaje.
+                    </p>
+                    <div class="p-3 bg-montanoAzulClaro/10 rounded-lg border-l-4 border-montanoAzul text-xs text-gray-700 space-y-2">
+                        <p><strong class="text-montanoAzul">1. Título:</strong> Atractivo, menciona al personaje o tema.</p>
+                        <p><strong class="text-montanoAzul">2. Introducción / Presentación:</strong> Se presenta brevemente a la persona entrevistada y el motivo de la conversación.</p>
+                        <p><strong class="text-montanoAzul">3. Cuerpo / Preguntas y Respuestas:</strong> El núcleo del diálogo (se recomienda usar preguntas abiertas).</p>
+                        <p><strong class="text-montanoAzul">4. Cierre / Conclusión:</strong> Agradecimiento final y reflexión o despedida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA II: TRABAJO INDIVIDUAL -->
+        <div id="tab2" class="tab-content pizarra-card p-6 hidden">
+            <div class="flex items-center gap-3 mb-4 border-b border-gray-200 pb-3">
+                <div class="bg-montanoAzul p-3 rounded-full text-white font-bold">
+                    <i class="fa-solid fa-pen-ruler text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-montanoAzul">Pestaña II: Trabajo Individual - El Guion Lector (20 min)</h2>
+                    <p class="text-xs text-gray-500">Evaluación Formativa - Análisis de la Estructura en el Cuaderno</p>
+                </div>
+            </div>
+
+            <!-- Instrucción del Ejercicio -->
+            <div class="bg-montanoFondo p-4 rounded-lg mb-6 border border-montanoAzulClaro">
+                <p class="text-sm text-gray-700">
+                    <strong>Desafío de Análisis y Clasificación:</strong> Lee los extractos de la siguiente entrevista a una superheroína del medio ambiente. Identifica a qué parte de la estructura pertenece cada sección y despliega para autoevaluar.
+                </p>
+            </div>
+
+            <!-- Situaciones didácticas con acordeones desplegables -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Fragmento A -->
+                <div class="bg-white p-4 rounded-lg border-2 border-montanoAzulClaro shadow-sm">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded">Fragmento A</span>
+                    <div class="bg-gray-50 p-3 rounded mt-2 border text-xs italic text-gray-800">
+                        "Hoy nos acompaña la Dra. Sofía Ramos, bióloga experta en la conservación del Quetzal en Guatemala. Estamos muy entusiasmados de conversar con ella sobre su importante labor."
+                    </div>
+                    
+                    <p class="text-xs text-gray-600 font-semibold mt-3">Pregunta: ¿A qué parte de la entrevista corresponde este texto?</p>
+
+                    <!-- Desplegable Oculto -->
+                    <button onclick="toggleAccordion('acc-ent1')" class="w-full mt-3 bg-montanoAzulClaro/20 hover:bg-montanoAzulClaro/30 text-montanoAzul font-semibold py-2 px-3 rounded flex justify-between items-center text-xs transition">
+                        <span><i class="fa-solid fa-eye mr-1"></i> Desplegar Solución / Pauta</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-acc-ent1"></i>
+                    </button>
+                    <div id="acc-ent1" class="accordion-content bg-gray-50 rounded p-3 mt-2 text-xs text-gray-700">
+                        <p class="font-bold text-green-700">Respuesta Sugerida:</p>
+                        <p class="italic"><strong>Parte:</strong> Introducción / Presentación. <strong>Motivo:</strong> Informa quién es el entrevistado y cuál es el propósito de la entrevista.</p>
+                    </div>
+                </div>
+
+                <!-- Fragmento B -->
+                <div class="bg-white p-4 rounded-lg border-2 border-montanoAzulClaro shadow-sm">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded">Fragmento B</span>
+                    <div class="bg-gray-50 p-3 rounded mt-2 border text-xs italic text-gray-800">
+                        "<strong>Reportero:</strong> ¿Qué acciones podemos realizar los niños de 4to Primaria para proteger a los pájaros?<br>
+                        <strong>Dra. Sofía:</strong> Lo principal es plantar árboles nativos y no contaminar los bosques."
+                    </div>
+
+                    <p class="text-xs text-gray-600 font-semibold mt-3">Pregunta: ¿A qué sección corresponde y qué tipo de pregunta se utilizó?</p>
+                    
+                    <!-- Desplegable Oculto -->
+                    <button onclick="toggleAccordion('acc-ent2')" class="w-full mt-3 bg-montanoAzulClaro/20 hover:bg-montanoAzulClaro/30 text-montanoAzul font-semibold py-2 px-3 rounded flex justify-between items-center text-xs transition">
+                        <span><i class="fa-solid fa-eye mr-1"></i> Desplegar Solución / Pauta</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-acc-ent2"></i>
+                    </button>
+                    <div id="acc-ent2" class="accordion-content bg-gray-50 rounded p-3 mt-2 text-xs text-gray-700">
+                        <p class="font-bold text-green-700">Respuesta Sugerida:</p>
+                        <p class="italic"><strong>Parte:</strong> Cuerpo (Preguntas y Respuestas). <strong>Tipo de pregunta:</strong> Pregunta abierta (permite dar una explicación amplia).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio escrito individual en cuaderno -->
+            <div class="mt-6 bg-montanoAmarillo/10 p-4 rounded-lg border border-montanoAmarillo">
+                <h4 class="font-bold text-montanoAzul text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> Actividad en Cuaderno (Hábito 2: Comenzar con un fin en mente):
+                </h4>
+                <p class="text-xs text-gray-700 mt-1">
+                    Redacta 3 preguntas abiertas para entrevistar a tu maestro/a de grado. Recuerda usar signos de interrogación (¿ ?) y tildar las palabras interrogativas (Qué, Cómo, Cuándo, Dónde, Por qué).
+                </p>
+            </div>
+        </div>
+
+        <!-- PESTAÑA III: TRABAJO COOPERATIVO -->
+        <div id="tab3" class="tab-content pizarra-card p-6 hidden">
+            <div class="flex items-center gap-3 mb-4 border-b border-gray-200 pb-3">
+                <div class="bg-montanoVerdeGris p-3 rounded-full text-white font-bold">
+                    <i class="fa-solid fa-users text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-montanoAzul">Pestaña III: Taller Reporteros Montano (15 min)</h2>
+                    <p class="text-xs text-gray-500">Trabajo Colaborativo en Parejas - Juego de Roles (Role Play)</p>
+                </div>
+            </div>
+
+            <!-- Asignación de Roles -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white p-3 rounded-lg border border-montanoAzulClaro">
+                    <h4 class="font-bold text-montanoAzul text-xs uppercase tracking-wider mb-2"><i class="fa-solid fa-microphone mr-1 text-montanoAmarillo"></i> Estudiante 1: Entrevistador</h4>
+                    <p class="text-xs text-gray-600">Formula el saludo inicial, realiza las preguntas del guion y agradece al finalizar con voz clara.</p>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-montanoAzulClaro">
+                    <h4 class="font-bold text-montanoAzul text-xs uppercase tracking-wider mb-2"><i class="fa-solid fa-user-check mr-1 text-montanoAzul"></i> Estudiante 2: Personaje Entrevistado</h4>
+                    <p class="text-xs text-gray-600">Asume un rol (ej. Deportista, Inventor, Maestro) y responde detalladamente a cada pregunta.</p>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-montanoAzulClaro">
+                    <h4 class="font-bold text-montanoAzul text-xs uppercase tracking-wider mb-2"><i class="fa-solid fa-star text-montanoAmarillo mr-1"></i> Hábito Montano</h4>
+                    <p class="text-xs text-montanoVerdeGris font-semibold">Hábito 5: Buscar primero entender, luego ser entendido (Escuchar con atenta cortesía antes de repreguntar).</p>
+                </div>
+            </div>
+
+            <!-- Guía paso a paso para la dramatización -->
+            <div class="bg-montanoFondo p-4 rounded-lg border border-gray-300">
+                <h3 class="font-bold text-montanoAzul text-sm mb-3">
+                    <i class="fa-solid fa-list-check text-montanoVerdeOliva"></i> Matriz de Trabajo en Parejas: Guion Rápido de Entrevista
+                </h3>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left text-gray-600 bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead class="bg-montanoAzul text-white">
+                            <tr>
+                                <th class="p-2.5">Estructura</th>
+                                <th class="p-2.5">¿Qué debe decir el Entrevistador?</th>
+                                <th class="p-2.5">¿Qué debe decir el Entrevistado?</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="p-2.5 font-bold text-montanoAzul">1. Presentación</td>
+                                <td class="p-2.5">"¡Buenos días! Hoy nos acompaña [Nombre del compañero], famoso chef guatemalteco..."</td>
+                                <td class="p-2.5 font-semibold text-gray-700">"¡Hola! Muchas gracias por invitarme a este espacio."</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-montanoAzul">2. Pregunta Abierta</td>
+                                <td class="p-2.5">"¿Cuál es el ingrediente secreto que hace tan especial tu platillo favorito?"</td>
+                                <td class="p-2.5 font-semibold text-gray-700">"El secreto está en combinar especias naturales con mucho entusiasmo..."</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-montanoAzul">3. Cierre</td>
+                                <td class="p-2.5">"Muchas gracias por su tiempo y por compartir sus valiosos consejos con nosotros."</td>
+                                <td class="p-2.5 font-semibold text-gray-700">"¡Un gusto! Gracias a todos por escuchar."</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA IV: PLENARIA Y TRIVIA INTERACTIVA -->
+        <div id="tab4" class="tab-content pizarra-card p-6 hidden">
+            <div class="flex items-center gap-3 mb-4 border-b border-gray-200 pb-3">
+                <div class="bg-montanoAmarillo p-3 rounded-full text-montanoAzul font-bold">
+                    <i class="fa-solid fa-gamepad text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-montanoAzul">Pestaña IV: Plenaria, Trivia y Rúbrica de Evaluación (~10 min)</h2>
+                    <p class="text-xs text-gray-500">Evaluación Sumativa y Comprobación de Aprendizajes</p>
+                </div>
+            </div>
+
+            <!-- TRIVIA INTERACTIVA -->
+            <div class="bg-white p-5 rounded-xl border-2 border-montanoAzulClaro mb-6 shadow-sm">
+                <h3 class="font-bold text-montanoAzul text-base mb-2 flex items-center justify-between">
+                    <span><i class="fa-solid fa-circle-question text-montanoAmarillo"></i> Trivia Flash: "La Entrevista y sus Partes"</span>
+                    <span id="score" class="text-xs bg-montanoAzul text-white px-3 py-1 rounded-full font-bold">Puntos: 0</span>
+                </h3>
+
+                <div id="quiz-container" class="space-y-4">
+                    <p id="quiz-question" class="text-sm font-semibold text-gray-800">
+                        ¿Cuál es la función principal de la INTRODUCCIÓN en una entrevista?
+                    </p>
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <button onclick="checkAnswer(false, this)" class="bg-montanoFondo hover:bg-montanoAzulClaro/20 text-gray-800 p-2.5 rounded-lg border border-gray-300 text-xs text-left font-medium">Despedirse del público y dar las gracias.</button>
+                        <button onclick="checkAnswer(true, this)" class="bg-montanoFondo hover:bg-montanoAzulClaro/20 text-gray-800 p-2.5 rounded-lg border border-gray-300 text-xs text-left font-medium">Presentar al entrevistado y el tema de la conversación.</button>
+                    </div>
+                    <div id="quiz-feedback" class="hidden text-xs font-bold p-2 rounded mt-2"></div>
+                </div>
+            </div>
+
+            <!-- INSTRUMENTO DE EVALUACIÓN (LISTA DE COTEJO DE PLENARIA) -->
+            <div class="bg-montanoFondo p-4 rounded-xl border border-montanoAzulClaro">
+                <h3 class="font-bold text-montanoAzul text-sm mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-square-check text-montanoVerdeGris"></i> Lista de Cotejo - Evaluación de la Entrevista en Pareja
+                </h3>
+
+                <div class="space-y-2">
+                    <label class="flex items-center gap-3 bg-white p-2.5 rounded border border-gray-200 text-xs cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" class="w-4 h-4 text-montanoAzul rounded">
+                        <span>1. Reconoce la estructura: Incluye presentación, preguntas pertinentes y cierre.</span>
+                    </label>
+                    <label class="flex items-center gap-3 bg-white p-2.5 rounded border border-gray-200 text-xs cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" class="w-4 h-4 text-montanoAzul rounded">
+                        <span>2. Redacción e interrogación: Usa correctamente los signos (¿ ?) y tildes en preguntas abiertas.</span>
+                    </label>
+                    <label class="flex items-center gap-3 bg-white p-2.5 rounded border border-gray-200 text-xs cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" class="w-4 h-4 text-montanoAzul rounded">
+                        <span>3. Expresión oral y escucha: Modula adecuadamente la voz y escucha activamente al compañero (Hábito 5).</span>
+                    </label>
+                    <label class="flex items-center gap-3 bg-white p-2.5 rounded border border-gray-200 text-xs cursor-pointer hover:bg-gray-50">
+                        <input type="checkbox" class="w-4 h-4 text-montanoAzul rounded">
+                        <span>4. Trabajo colaborativo: Cumple proactivamente con el rol asignado dentro de la pareja.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-montanoAzul text-white text-center py-2 text-xs border-t-2 border-montanoAmarillo">
+        <p>© 2027 Colegio Montano - Sistema de Planificación Digital e Interactiva en Pizarra</p>
+    </footer>
+
+    <!-- JAVASCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // Función para cambiar de pestaña
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        // Función para los desplegables (Acordeón)
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                if(icon) icon.className = "fa-solid fa-chevron-down";
+            } else {
+                content.classList.add('open');
+                if(icon) icon.className = "fa-solid fa-chevron-up";
+            }
+        }
+
+        // Función de Pantalla Completa
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error intentando activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Lógica interactiva de Trivia Flash
+        let score = 0;
+        function checkAnswer(isCorrect, btnElement) {
+            const feedback = document.getElementById('quiz-feedback');
+            const scoreDisplay = document.getElementById('score');
+            
+            feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            
+            if (isCorrect) {
+                score += 10;
+                scoreDisplay.innerText = `Puntos: ${score}`;
+                feedback.classList.add('bg-green-100', 'text-green-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Excelente! La introducción sirve para presentar al invitado y dar contexto al público.';
+                btnElement.classList.add('bg-green-200');
+            } else {
+                feedback.classList.add('bg-red-100', 'text-red-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Revisa con atención: despedirse corresponde al cierre de la entrevista.';
+                btnElement.classList.add('bg-red-200');
+            }
+        }
+    </script>
+</body>
+</html>
